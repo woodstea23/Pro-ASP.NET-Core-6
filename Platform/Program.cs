@@ -1,6 +1,7 @@
 var builder = WebApplication.CreateBuilder(args);
 var app = builder.Build();
 
+// The .Use method registers a middleware component in the request pipeline.
 app.Use(async (context, next) =>
 {
     if (context.Request.Method == HttpMethods.Get
@@ -11,6 +12,8 @@ app.Use(async (context, next) =>
     }
     await next();
 });
+
+app.UseMiddleware<Platform.QueryStringMiddleware>();
 
 app.MapGet("/", () => "Hello World!");
 
